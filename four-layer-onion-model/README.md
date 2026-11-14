@@ -5,6 +5,8 @@ adapted from Mark J. J. McCormack's October 2026 letter on the 4 Layer Onion
 Model (v4).
 
 - `main.tex`: paper source
+- `ulpaper.cls`: document class, copied from
+  [academic-paper-skill](../academic-paper-skill/)
 - `references.bib`: bibliography
 - `figures/`: figures carried over from the source document
 - `main.pdf`: compiled paper
@@ -18,9 +20,9 @@ fetches the LaTeX packages it needs on first run:
 make
 ```
 
-The paper's structure follows the `academic-paper.tex` template from
-[ndpvt-web/latex-document-skill](https://github.com/ndpvt-web/latex-document-skill),
-and its prose was checked with
+The paper uses the two-column layout of `ulpaper.cls`, styled after ICML
+preprints, with author-year citations; the appendix switches to one column for
+the code listing. Its prose was checked with
 [proseclean](https://github.com/ayahohner/proseclean).
 
 ## License
