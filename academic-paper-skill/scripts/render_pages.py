@@ -11,7 +11,7 @@ way to check layout across the whole paper.
 import argparse
 import os
 
-import fitz  # pymupdf
+import pymupdf as fitz
 from PIL import Image
 
 
