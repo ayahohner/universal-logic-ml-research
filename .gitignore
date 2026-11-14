@@ -5,3 +5,6 @@
 *.out
 *.synctex.gz
 .DS_Store
+*.fls
+*.fdb_latexmk
+academic-paper-skill/template/main.pdf

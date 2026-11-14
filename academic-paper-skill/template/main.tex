@@ -1,0 +1,188 @@
+% Research paper template built on ulpaper.cls.
+%
+% Layout: twocolumn (ICML-like, default) or onecolumn (NeurIPS-like).
+% Add a4paper for A4, review for line numbers, numbers for [1]-style citations.
+% There is no page limit; long papers put supporting material in appendices.
+\documentclass[twocolumn]{ulpaper}
+% \documentclass[onecolumn]{ulpaper}
+
+% Optional packages for this paper
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage{siunitx}
+
+% Paper-specific macros
+\newcommand{\method}{\textsc{Method}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\hypersetup{
+  pdftitle={Paper Title: A Descriptive Subtitle},
+  pdfauthor={First Author, Second Author},
+  pdfkeywords={keyword one, keyword two},
+}
+
+\title{Paper Title:\\A Descriptive Subtitle}
+\shorttitle{Paper Title}
+\author{First Author\affil{1} \And Second Author\affil{1,2} \AND Third Author\affil{2}}
+\affiliations{\affil{1}First Institution, City, Country.
+  \affil{2}Second Institution, City, Country.}
+\correspondence{First Author \textless\texttt{first@example.org}\textgreater.}
+\notice{Preprint.}
+\keywords{keyword one; keyword two; keyword three}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+State the problem in one or two sentences. Say what is missing from current approaches. Describe the method or argument in two or three sentences. Report the main result with a number where there is one. Close with what the result means for the field. Aim for 150 to 250 words.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:intro}
+
+Open with the problem and why it matters. Cite prior work in author-year form: \citet{vaswani2017attention} for a citation that is part of the sentence, and \citep{kingma2015adam} for a parenthetical one.
+
+The second paragraph says what current methods do and where they fall short. The third paragraph introduces the approach of this paper.
+
+We make three contributions.
+\begin{enumerate}
+  \item A formulation of the problem that makes the assumptions explicit (\cref{sec:method}).
+  \item A method that addresses it, given in \cref{alg:method}.
+  \item Experiments that test the method against baselines (\cref{sec:experiments}).
+\end{enumerate}
+
+\section{Related Work}
+\label{sec:related}
+
+\paragraph{First line of work.} Group related papers by idea and say how this paper differs from each group.
+
+\paragraph{Second line of work.} Use run-in bold paragraph heads for each group instead of bullet lists.
+
+\section{Method}
+\label{sec:method}
+
+\subsection{Problem formulation}
+
+Define notation once, then use it consistently. Number only the equations that the text refers to.
+\begin{equation}
+  \label{eq:objective}
+  \mathcal{L}(\theta) = \frac{1}{N}\sum_{i=1}^{N} \ell\bigl(f_\theta(x_i), y_i\bigr) + \lambda \lVert \theta \rVert_2^2 .
+\end{equation}
+\noindent Text that continues the sentence after a display starts with \verb|\noindent|.
+
+\begin{assumption}[Bounded loss]
+\label{asm:bounded}
+The loss satisfies $0 \le \ell \le 1$.
+\end{assumption}
+
+\begin{definition}[Score]
+\label{def:score}
+For an input $x$, the score is $s(x) = \max_{y} p_\theta(y \mid x)$.
+\end{definition}
+
+\subsection{Algorithm}
+
+\Cref{alg:method} gives the procedure and \cref{fig:overview} shows its components.
+
+\begin{algorithm}[t]
+\caption{Training with \method}
+\label{alg:method}
+\begin{algorithmic}[1]
+\Require data $\{(x_i, y_i)\}_{i=1}^N$, step size $\eta$, steps $T$
+\State initialize $\theta_0$
+\For{$t = 1, \dots, T$}
+  \State sample a minibatch $B$
+  \State $\theta_t \gets \theta_{t-1} - \eta \nabla \mathcal{L}_B(\theta_{t-1})$
+\EndFor
+\State \Return $\theta_T$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[font=\small,
+  box/.style={draw, rounded corners=2pt, fill=#1, minimum height=6mm, inner xsep=4pt, align=center},
+  box/.default=white, arr/.style={-{Stealth[length=2mm]}, thick}]
+  \node[box=ulblue!12] (a) {Input};
+  \node[box, right=6mm of a] (b) {Encoder};
+  \node[box=ulorange!20, right=6mm of b] (c) {Output};
+  \draw[arr] (a) -- (b);
+  \draw[arr] (b) -- (c);
+\end{tikzpicture}
+\caption{A column-width figure. The caption says what the reader should notice, in full sentences.}
+\label{fig:overview}
+\end{figure}
+
+\section{Experiments}
+\label{sec:experiments}
+
+\subsection{Setup}
+
+\begin{table*}[t]
+\caption{A full-width table for content too wide for one column.}
+\label{tab:wide}
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}l X c c c@{}}
+\toprule
+Setting & Description & Metric 1 & Metric 2 & Metric 3 \\
+\midrule
+A & A setting that needs a longer description than a narrow column allows. & 0.81 & 0.77 & 0.92 \\
+B & A second setting described at similar length. & 0.84 & 0.79 & 0.90 \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+Describe data, baselines, metrics, and compute. \Cref{tab:main} reports the main results. Tables use \texttt{booktabs} rules only, with captions above.
+
+\begin{table}[t]
+\caption{Main results. Mean and standard deviation over three seeds; best in bold.}
+\label{tab:main}
+\centering
+\small
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Method & Accuracy (\%) & Time (s) \\
+\midrule
+Baseline A & $85.2 \pm 0.4$ & 12.3 \\
+Baseline B & $87.5 \pm 0.6$ & 15.7 \\
+\method{} (ours) & $\mathbf{91.3} \pm 0.3$ & 14.2 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Results}
+
+Report what the numbers show, then what they mean. Wide content that spans both columns uses the starred environments, as in \cref{tab:wide}. Place a starred float in the source before the page where it should appear, since LaTeX sets it at the top of the next page; in the one-column layout the starred forms behave like the plain ones.
+
+
+\section{Discussion and Limitations}
+\label{sec:limitations}
+
+State what the results do not show, which assumptions may fail, and what remains open.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+Summarize the contribution and the main result in a short paragraph, then name the next steps.
+
+\section*{Acknowledgments}
+Thank people and funders here.
+
+\bibliography{references}
+
+\appendix
+
+\section{Additional Details}
+\label{app:details}
+
+Appendices hold proofs, extra results, hyperparameters, and code. They start on a new page and are lettered.
+
+\begin{lstlisting}[language=Python, caption={Code listings use the class style.}, label={lst:example}]
+def score(probs):
+    """Return the maximum class probability."""
+    return max(probs)
+\end{lstlisting}
+
+\end{document}
