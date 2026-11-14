@@ -10,6 +10,8 @@ Model (v4).
 - `references.bib`: bibliography
 - `figures/`: figures carried over from the source document
 - `main.pdf`: compiled paper
+- `questions-for-author.md`: open questions for the author, and the
+  terminology and related-work changes planned for the next revision
 
 ## Build
 
